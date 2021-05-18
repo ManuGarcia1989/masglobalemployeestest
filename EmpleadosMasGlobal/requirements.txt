@@ -1,0 +1,4 @@
+Django==2.2.8
+gunicorn
+djangorestframework
+requests==2.7.0
