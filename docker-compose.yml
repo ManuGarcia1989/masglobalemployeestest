@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  employees_microservice:
+    build: ./employeesmasglobal
+    container_name: employees_microservice
+    ports:
+      - "8080:8080"
+
+  web:
+    build: ./django_service/employees
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: employees-web
+    volumes:
+      - ./django_service/employees/:/srv/src/
+    restart: always
+
+  nginx:
+    restart: always
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./django_service/employees/static/static-only/:/srv/src/static
+      - ./django_service/employees/media/:/srv/src/media
+      - ./nginx/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    links:
+      - web
+
+volumes:
+  db-data:
+    driver: local
+ 
