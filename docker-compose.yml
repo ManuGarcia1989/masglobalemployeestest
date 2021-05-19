@@ -9,23 +9,14 @@ services:
 
   web:
     build: ./django_service/employees
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:80
     container_name: employees-web
     volumes:
       - ./django_service/employees/:/srv/src/
+    ports: 
+      - 80:80
+  
     restart: always
-
-  nginx:
-    restart: always
-    image: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./django_service/employees/static/static-only/:/srv/src/static
-      - ./django_service/employees/media/:/srv/src/media
-      - ./nginx/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf
-    links:
-      - web
 
 volumes:
   db-data:

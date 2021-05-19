@@ -1,25 +1,16 @@
-FROM python:3
+FROM python:3.8.3-alpine
 
-ENV PYTHONUNBUFFERED=1
-ENV C_FORCE_ROOT=1
+# set work directory
+WORKDIR /usr/src/app
 
-ENV DOCKYARD_SRC=.
-ENV DOCKYARD_SRVHOME=/srv
-ENV DOCKYARD_SRVPROJ=/srv/src
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR $DOCKYARD_SRVHOME
-RUN apt update && apt install gdal-bin -y
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
 
-COPY $DOCKYARD_SRC $DOCKYARD_SRVPROJ
-
-# Port to expose
-EXPOSE 8000
-
-# Copy entrypoint script into the image
-WORKDIR $DOCKYARD_SRVPROJ
-
-RUN pip install -r $DOCKYARD_SRVPROJ/requirements.txt
-
-#ADD docker-entrypoint.sh /docker-entrypoint.sh
-#RUN chmod +x /docker-entrypoint.sh
-#CMD ["sh", "/docker-entrypoint.sh"]
+# copy project
+COPY . .
