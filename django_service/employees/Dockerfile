@@ -18,7 +18,7 @@ EXPOSE 8000
 # Copy entrypoint script into the image
 WORKDIR $DOCKYARD_SRVPROJ
 
-RUN pip install -r $DOCKYARD_SRVPROJ/requerimientos.txt
+RUN pip install -r $DOCKYARD_SRVPROJ/requirements.txt
 
 #ADD docker-entrypoint.sh /docker-entrypoint.sh
 #RUN chmod +x /docker-entrypoint.sh
