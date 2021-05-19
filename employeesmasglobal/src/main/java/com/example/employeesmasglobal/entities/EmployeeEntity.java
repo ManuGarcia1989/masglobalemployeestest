@@ -21,6 +21,4 @@ public class EmployeeEntity implements Serializable {
     private String Position;
     private Boolean Hourly;
     private Double HourlySalary;
-
-
 }
