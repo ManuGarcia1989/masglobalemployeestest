@@ -10,6 +10,6 @@ RUN mvn -f /home/app/pom.xml clean package
 # Package stage
 #
 FROM openjdk:11-jre-slim
-COPY --from=build /home/app/target/*.jar /app/spring-boot-application.jar
+COPY --from=build /home/app/target/*.jar /usr/local/lib/spring-boot-application.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
+ENTRYPOINT ["java","-jar","/usr/local/lib/spring-boot-application.jar"]
